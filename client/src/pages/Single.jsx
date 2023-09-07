@@ -1,54 +1,54 @@
-import React, { useEffect, useState } from "react";
-import Edit from "../img/edit.png";
-import Delete from "../img/delete.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import Menu from "../components/Menu";
-import axios from "axios";
-import moment from "moment";
-import { useContext } from "react";
-import { AuthContext } from "../context/authContext";
-import DOMPurify from "dompurify";
-import { domain } from "../config.js";
+import React, { useEffect, useState } from "react"
+import Edit from "../img/edit.png"
+import Delete from "../img/delete.png"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import Menu from "../components/Menu"
+import axios from "axios"
+import moment from "moment"
+import { useContext } from "react"
+import { AuthContext } from "../context/authContext"
+import DOMPurify from "dompurify"
+import { domain } from "../config.js"
 
 const Single = () => {
-    const [post, setPost] = useState({});
+    const [post, setPost] = useState({})
 
-    const location = useLocation();
-    const navigate = useNavigate();
+    const location = useLocation()
+    const navigate = useNavigate()
 
-    const postId = location.pathname.split("/")[2];
+    const postId = location.pathname.split("/")[2]
 
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/posts/${postId}`);
-                setPost(res.data);
+                const res = await axios.get(`/posts/${postId}`)
+                setPost(res.data)
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
-        };
-        fetchData();
-    }, [postId]);
+        }
+        fetchData()
+    }, [postId])
 
     const handleDelete = async () => {
-        const shouldDelete = window.confirm("Bạn có chắc chắn muốn xóa bài viết này?");
+        const shouldDelete = window.confirm("Bạn có chắc chắn muốn xóa bài viết này?")
 
         if (shouldDelete) {
             try {
-                await axios.delete(`/posts/${postId}`);
-                navigate("/");
+                await axios.delete(`/posts/${postId}`)
+                navigate("/")
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         }
-    };
+    }
 
     const getText = (html) => {
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        return doc.body.textContent;
-    };
+        const doc = new DOMParser().parseFromString(html, "text/html")
+        return doc.body.textContent
+    }
 
     return (
         <div className="single">
@@ -80,7 +80,7 @@ const Single = () => {
             </div>
             <Menu cat={post.cat} id={post.id} />
         </div>
-    );
-};
+    )
+}
 
-export default Single;
+export default Single
