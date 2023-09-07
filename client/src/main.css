@@ -104,7 +104,7 @@
     margin-top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 150px;
+    gap: 30px;
 }
 .app .container .home .posts .post {
     display: flex;
@@ -138,8 +138,9 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.app .container .home .posts .post .content h1 {
-    font-size: 48px;
+.app .container .home .posts .post .content h3 {
+    color: #1b1b1b;
+    font-weight: 500;
 }
 .app .container .home .posts .post .content p {
     font-size: 18px;
@@ -150,8 +151,9 @@
     border: none;
     cursor: pointer;
     background-color: white;
-    border: 1px solid teal;
+    border: 1px solid teal; 
     color: teal;
+    margin: 8px 0;
 }
 .app .container .home .posts .post .content button:hover {
     border: 1px solid white;
@@ -166,7 +168,7 @@
     flex: 5;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 16px;
 }
 .app .container .single .content img {
     width: 100%;
@@ -198,12 +200,12 @@
     cursor: pointer;
 }
 .app .container .single .content h1 {
-    font-size: 42px;
+    font-size: 30px;
     color: #333;
 }
 .app .container .single .content p {
     text-align: justify;
-    line-height: 30px;
+    line-height: 24px;
 }
 .app .container .single .menu {
     flex: 2;
