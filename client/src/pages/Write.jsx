@@ -7,23 +7,30 @@ import moment from "moment";
 
 const Write = () => {
     const state = useLocation().state;
-    const [value, setValue] = useState(state?.title || "");
-    const [title, setTitle] = useState(state?.desc || "");
+    const [value, setValue] = useState(state?.desc || "");
+    const [title, setTitle] = useState(state?.title || "");
     const [file, setFile] = useState(null);
     const [cat, setCat] = useState(state?.cat || "");
+    const [image] = useState(state?.img || "")
 
     const navigate = useNavigate()
 
     const upload = async () => {
         try {
+            if (!file) {
+                console.log("Không có dữ liệu trong file.");
+                return;
+            }
+
             const formData = new FormData();
             formData.append("file", file);
             const res = await axios.post("/upload", formData);
             return res.data;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
+
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -35,13 +42,13 @@ const Write = () => {
                     title,
                     desc: value,
                     cat,
-                    img: file ? imgUrl : "",
+                    img: file ? imgUrl : image,
                 })
                 : await axios.post(`/posts/`, {
                     title,
                     desc: value,
                     cat,
-                    img: file ? imgUrl : "",
+                    img: file ? imgUrl : image,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
                 });
             navigate("/")
@@ -56,6 +63,7 @@ const Write = () => {
                 <input
                     type="text"
                     placeholder="Title"
+                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <div className="editorContainer">
@@ -93,7 +101,7 @@ const Write = () => {
                 </div>
                 <div className="item">
                     <h1>Category</h1>
-                    <div className="cat">
+                    {/* <div className="cat">
                         <input
                             type="radio"
                             checked={cat === "art"}
@@ -103,7 +111,7 @@ const Write = () => {
                             onChange={(e) => setCat(e.target.value)}
                         />
                         <label htmlFor="art">Art</label>
-                    </div>
+                    </div> */}
                     <div className="cat">
                         <input
                             type="radio"

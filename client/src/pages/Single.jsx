@@ -9,6 +9,7 @@ import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import DOMPurify from "dompurify"
 import { domain } from "../config.js"
+import 'moment/locale/vi';
 
 const Single = () => {
     const [post, setPost] = useState({})
@@ -53,15 +54,12 @@ const Single = () => {
     return (
         <div className="single">
             <div className="content">
-                {post.img && (
-                    <img src={`${domain}/${post.img}`} alt="" />
-                )}
                 <div className="user">
-                    {post.userImg && <img src={post.userImg} alt="" />}
                     <div className="info">
                         <span style={{ color: '#5488c7' }}>{post.username}</span>
-                        <p>Posted {moment(post.date).fromNow()}</p>
+                        <p className="time">Đã đăng vào {moment(post.date).locale('vi').fromNow()}</p>
                     </div>
+                    {post.userImg && <img src={post.userImg} alt="" />}
                     {currentUser && currentUser.id === post.uid && (
                         <div className="edit">
                             <Link to={`/write?edit=2`} state={post}>
@@ -72,9 +70,12 @@ const Single = () => {
                     )}
                 </div>
                 <h1>{post.title}</h1>
+                {post.img && (
+                    <img src={`${domain}/${post.img}`} alt="" />
+                )}
                 <p
                     dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(post.desc),
+                        __html: DOMPurify.sanitize((post.desc)),
                     }}
                 ></p>{" "}
             </div>

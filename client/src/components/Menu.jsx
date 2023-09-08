@@ -1,22 +1,24 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { domain } from '../config'
+import axios from "axios"
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import moment from "moment"
+import 'moment/locale/vi'
 
 const Menu = ({ cat, id }) => {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([])
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/posts/?cat=${cat}`);
+                const res = await axios.get(`/posts/?cat=${cat}`)
                 console.log(res)
-                setPosts(res.data.filter(item => item.id != id));
+                setPosts(res.data.filter(item => item.id != id))
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
-        };
-        fetchData();
-    }, [cat]);
+        }
+        fetchData()
+    }, [cat, id])
     return (
         <div className="menu">
             {posts.length == 0 ? (
@@ -27,16 +29,19 @@ const Menu = ({ cat, id }) => {
             {posts.map((post) => (
                 <div className="post" key={post.id}>
                     <Link className="link" to={`/post/${post.id}`}>
-                        <h2>{post.title}</h2>
+                        <h4>{post.title}</h4>
                     </Link>
-                    <span style={{ color: '#5488c7' }}>{post.username}</span>
+                    <div className="info-user">
+                        <span style={{ color: '#5488c7' }}>{post.username}</span>
+                        <p>{moment(post.date).locale('vi').fromNow()}</p>
+                    </div>
                     <Link className="link" to={`/post/${post.id}`}>
                         <button>Read More</button>
                     </Link>
                 </div>
             ))}
         </div>
-    );
-};
+    )
+}
 
-export default Menu;
+export default Menu

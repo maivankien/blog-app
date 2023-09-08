@@ -3,7 +3,7 @@
     justify-content: center;
 }
 .app .container {
-    width: 1024px;
+    width: 1100px;
 }
 .app .container .link {
     text-decoration: none;
@@ -69,13 +69,18 @@
     font-size: 16px;
     font-weight: 300;
 }
-.app .container .navbar .container .links span {
+
+.app .container .navbar .container .links h6:hover {
+    color: teal;
+}
+
+.app .container .navbar .container .links .logout:hover {
+    color: teal;
     cursor: pointer;
 }
 .app .container .navbar .container .links .write {
     background-color: #b9e7e7;
-    width: 50px;
-    height: 50px;
+    height: 55px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -83,10 +88,14 @@
     font-weight: 300;
     border: 1px solid white;
 }
+
+.app .container .navbar .container .links .write .link {
+    margin: 4px;
+}
+
 .app .container .navbar .container .links .write:hover {
     color: teal;
-    background-color: white;
-    border: 1px solid teal;
+    opacity: 0.7;
 }
 .app .container footer {
     margin-top: 100px;
@@ -169,6 +178,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    min-width: 70%;
 }
 .app .container .single .content img {
     width: 100%;
@@ -200,21 +210,37 @@
     cursor: pointer;
 }
 .app .container .single .content h1 {
-    font-size: 30px;
+    font-size: 28px;
     color: #333;
 }
-.app .container .single .content p {
-    text-align: justify;
+.app .container .single .content .time {
+    color: #686565;
     line-height: 24px;
 }
 .app .container .single .menu {
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 12px;
 }
-.app .container .single .menu h1 {
-    font-size: 20px;
+
+.app .container .single .menu .info-user {
+    display: flex;
+    align-items: center;
+}
+
+.app .container .single .menu span {
+    font-size: 14px;
+}
+
+.app .container .single .menu p {
+    margin-left: 16px;
+    color: #9b9b9b;
+    font-size: 12px;
+}
+
+.app .container .single .menu h4 {
+    font-size: 16px;
     color: #555;
 }
 .app .container .single .menu .post {
@@ -232,7 +258,7 @@
 }
 .app .container .single .menu .post button {
     width: max-content;
-    padding: 7.5px 15px;
+    padding: 6px 12px;
     border: none;
     cursor: pointer;
     color: teal;
