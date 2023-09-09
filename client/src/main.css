@@ -67,7 +67,7 @@
 }
 .app .container .navbar .container .links h6 {
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .app .container .navbar .container .links h6:hover {
@@ -286,12 +286,12 @@
     border: 1px solid lightgray;
 }
 .app .container .add .content .editorContainer {
-    height: 300px;
+    height: 350px;
     overflow: scroll;
     border: 1px solid lightgray;
 }
 .app .container .add .content .editorContainer .editor {
-    height: 100%;
+    height: calc(100% - 44px);
     border: none;
 }
 .app .container .add .menu {
@@ -310,6 +310,8 @@
     font-size: 12px;
     color: #555;
 }
+
+
 .app .container .add .menu .item h1 {
     font-size: 20px;
 }
@@ -319,8 +321,18 @@
 }
 .app .container .add .menu .item .buttons {
     display: flex;
+    margin-top: 12px;
     justify-content: space-between;
 }
+
+.app .container .add .menu .item .buttons button {
+    border-radius: 2px;
+}
+
+.app .container .add .menu .item .buttons:hover {
+    opacity: 0.8;
+}
+
 .app .container .add .menu .item .buttons :first-child {
     cursor: pointer;
     color: teal;

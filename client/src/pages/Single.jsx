@@ -26,6 +26,12 @@ const Single = () => {
             try {
                 const res = await axios.get(`/posts/${postId}`)
                 setPost(res.data)
+                function stripHtml(html) {
+                    return html.replace(/<[^>]*>/g, '');
+                }
+                let timeRead = Math.round((stripHtml(res.data.desc).split(" ").length / 250) * 60)
+                console.log(timeRead)
+                document.title = res.data.title
             } catch (err) {
                 console.log(err)
             }
@@ -46,10 +52,10 @@ const Single = () => {
         }
     }
 
-    const getText = (html) => {
-        const doc = new DOMParser().parseFromString(html, "text/html")
-        return doc.body.textContent
-    }
+    // const getText = (html) => {
+    //     const doc = new DOMParser().parseFromString(html, "text/html")
+    //     return doc.body.textContent
+    // }
 
     return (
         <div className="single">

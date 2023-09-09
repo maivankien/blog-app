@@ -1,9 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
+    useEffect(() => {
+        document.title = 'Đăng ký'
+    })
     const [inputs, setInputs] = useState({
         username: "",
         email: "",
@@ -29,7 +32,7 @@ const Register = () => {
 
     return (
         <div className="auth">
-            <h1>Register</h1>
+            <h1>Đăng ký</h1>
             <form>
                 <input
                     required
@@ -52,10 +55,10 @@ const Register = () => {
                     name="password"
                     onChange={handleChange}
                 />
-                <button onClick={handleSubmit}>Register</button>
+                <button onClick={handleSubmit}>Đăng ký</button>
                 {err && <p>{err}</p>}
                 <span>
-                    Do you have an account? <Link to="/login">Login</Link>
+                    Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
                 </span>
             </form>
         </div>

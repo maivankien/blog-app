@@ -11,8 +11,7 @@ const Menu = ({ cat, id }) => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`/posts/?cat=${cat}`)
-                console.log(res)
-                setPosts(res.data.filter(item => item.id != id))
+                setPosts(res.data.filter(item => item.id !== id))
             } catch (err) {
                 console.log(err)
             }
@@ -21,7 +20,7 @@ const Menu = ({ cat, id }) => {
     }, [cat, id])
     return (
         <div className="menu">
-            {posts.length == 0 ? (
+            {posts.length === 0 ? (
                 <h3 style={{ display: 'none' }}>Bài viết liên quan</h3>
             ) : (
                 <h3>Bài viết liên quan</h3>

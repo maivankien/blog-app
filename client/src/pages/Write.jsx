@@ -1,41 +1,64 @@
-import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
-import moment from "moment";
+import React, { useState, useEffect } from "react"
+import ReactQuill from "react-quill"
+import "react-quill/dist/quill.snow.css"
+import axios from "axios"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import moment from "moment"
 
 const Write = () => {
-    const state = useLocation().state;
-    const [value, setValue] = useState(state?.desc || "");
-    const [title, setTitle] = useState(state?.title || "");
-    const [file, setFile] = useState(null);
-    const [cat, setCat] = useState(state?.cat || "");
+    let state = useLocation().state
+    const [searchParams] = useSearchParams()
+
+    if (!searchParams.get('edit')) state = null
+
+    const [value, setValue] = useState(state?.desc || "")
+    const [title, setTitle] = useState(state?.title || "")
+    const [file, setFile] = useState(null)
+    const [cat, setCat] = useState(state?.cat || "")
     const [image] = useState(state?.img || "")
 
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (state) {
+            document.title = 'Chỉnh sửa'
+        } else {
+            document.title = 'Đăng bài'
+        }
+        setValue(state?.desc || '')
+        setTitle(state?.title || '')
+        setCat(state?.cat || '')
+    }, [state])
+
     const upload = async () => {
         try {
-            if (!file) {
-                console.log("Không có dữ liệu trong file.");
-                return;
-            }
+            if (!file) return
 
-            const formData = new FormData();
-            formData.append("file", file);
-            const res = await axios.post("/upload", formData);
-            return res.data;
+            const formData = new FormData()
+            formData.append("file", file)
+            const res = await axios.post("/upload", formData)
+            return res.data
         } catch (err) {
-            console.error(err);
+            console.error(err)
         }
-    };
+    }
 
 
     const handleClick = async (e) => {
-        e.preventDefault();
-        const imgUrl = await upload();
-
+        e.preventDefault()
+        const imgUrl = await upload()
+        if (!title.trim().length) {
+            alert('Tiêu đề không được bỏ trống')
+            return
+        }
+        if (!value.trim().length) {
+            alert('Nội dung không được bỏ trống')
+            return
+        }
+        if (title.trim().length > 255) {
+            alert('Tiêu đề không được vượt quá 255 ký tự')
+            return
+        }
         try {
             state
                 ? await axios.put(`/posts/${state.id}`, {
@@ -50,12 +73,13 @@ const Write = () => {
                     cat,
                     img: file ? imgUrl : image,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-                });
+                })
             navigate("/")
         } catch (err) {
-            console.log(err);
+            alert('Có lỗi xảy ra. Vui lòng thử lại.')
+            console.log(err)
         }
-    };
+    }
 
     return (
         <div className="add">
@@ -77,41 +101,24 @@ const Write = () => {
             </div>
             <div className="menu">
                 <div className="item">
-                    <h1>Publish</h1>
-                    <span>
-                        <b>Status: </b> Draft
-                    </span>
-                    <span>
-                        <b>Visibility: </b> Public
-                    </span>
-                    <input
-                        style={{ display: "none" }}
-                        type="file"
-                        id="file"
-                        name=""
-                        onChange={(e) => setFile(e.target.files[0])}
-                    />
-                    <label className="file" htmlFor="file">
-                        Upload Image
-                    </label>
-                    <div className="buttons">
-                        <button>Save as a draft</button>
-                        <button onClick={handleClick}>Publish</button>
+                    <div className="">
+                        <input
+                            style={{ display: "none" }}
+                            type="file"
+                            id="file"
+                            name=""
+                            onChange={(e) => setFile(e.target.files[0])}
+                        />
+                        <label className="file" htmlFor="file">
+                            Chọn ảnh
+                        </label>
+                        <div className="buttons">
+                            <button onClick={handleClick}>{state ? "Cập nhật" : "Đăng bài"}</button>
+                        </div>
                     </div>
                 </div>
                 <div className="item">
-                    <h1>Category</h1>
-                    {/* <div className="cat">
-                        <input
-                            type="radio"
-                            checked={cat === "art"}
-                            name="cat"
-                            value="art"
-                            id="art"
-                            onChange={(e) => setCat(e.target.value)}
-                        />
-                        <label htmlFor="art">Art</label>
-                    </div> */}
+                    <h1>Thể loại</h1>
                     <div className="cat">
                         <input
                             type="radio"
@@ -121,7 +128,7 @@ const Write = () => {
                             id="science"
                             onChange={(e) => setCat(e.target.value)}
                         />
-                        <label htmlFor="science">Science</label>
+                        <label htmlFor="science">Khoa học</label>
                     </div>
                     <div className="cat">
                         <input
@@ -132,7 +139,7 @@ const Write = () => {
                             id="technology"
                             onChange={(e) => setCat(e.target.value)}
                         />
-                        <label htmlFor="technology">Technology</label>
+                        <label htmlFor="technology">Công nghệ</label>
                     </div>
                     <div className="cat">
                         <input
@@ -143,7 +150,7 @@ const Write = () => {
                             id="cinema"
                             onChange={(e) => setCat(e.target.value)}
                         />
-                        <label htmlFor="cinema">Cinema</label>
+                        <label htmlFor="cinema">Phim ảnh</label>
                     </div>
                     <div className="cat">
                         <input
@@ -154,7 +161,7 @@ const Write = () => {
                             id="design"
                             onChange={(e) => setCat(e.target.value)}
                         />
-                        <label htmlFor="design">Design</label>
+                        <label htmlFor="design">Thiết kế</label>
                     </div>
                     <div className="cat">
                         <input
@@ -165,12 +172,24 @@ const Write = () => {
                             id="food"
                             onChange={(e) => setCat(e.target.value)}
                         />
-                        <label htmlFor="food">Food</label>
+                        <label htmlFor="food">Đồ ăn</label>
+                    </div>
+                    <div className="cat">
+                        <input
+                            type="radio"
+                            checked={cat === "cancel"}
+                            name="cat"
+                            value="cancel"
+                            id="cancel"
+                            onChange={(e) => setCat("")}
+                            style={{ display: "none" }}
+                        />
+                        <label style={{ "cursor": "pointer" }} htmlFor="cancel">Bỏ chọn</label>
                     </div>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Write;
+export default Write
