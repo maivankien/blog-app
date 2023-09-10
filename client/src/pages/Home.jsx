@@ -10,7 +10,6 @@ const Home = () => {
     let [posts, setPosts] = useState([])
 
     const cat = useLocation().search
-    moment.locale('vi')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,6 +17,8 @@ const Home = () => {
                 const res = await axios.get(`/posts${cat}`)
                 if (cat.length) {
                     document.title = map[cat.split("=")[1]]
+                } else {
+                    document.title = 'Trang chủ'
                 }
                 setPosts(res.data)
             } catch (err) {
@@ -33,15 +34,15 @@ const Home = () => {
                 {posts.map((post) => (
                     <div className="post" key={post.id}>
                         <div className="content">
-                            <div className="">
+                            <div className="info-user">
                                 <span style={{ color: '#5488c7' }}>{post.username}</span>
-                                <span>Posted {moment(post.date).fromNow()}</span>
+                                <p>{moment(post.date).locale('vi').fromNow()}</p>
                             </div>
                             <Link className="link" to={`/post/${post.id}`}>
                                 <h3>{post.title}</h3>
                             </Link>
                             <Link className="link" to={`/post/${post.id}`}>
-                                <button>Read More</button>
+                                <button>Xem thêm</button>
                             </Link>
                         </div>
                     </div>

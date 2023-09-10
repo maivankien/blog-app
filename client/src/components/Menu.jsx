@@ -35,7 +35,7 @@ const Menu = ({ cat, id }) => {
                         <p>{moment(post.date).locale('vi').fromNow()}</p>
                     </div>
                     <Link className="link" to={`/post/${post.id}`}>
-                        <button>Read More</button>
+                        <button>Xem thêm</button>
                     </Link>
                 </div>
             ))}

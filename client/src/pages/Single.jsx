@@ -26,11 +26,11 @@ const Single = () => {
             try {
                 const res = await axios.get(`/posts/${postId}`)
                 setPost(res.data)
-                function stripHtml(html) {
-                    return html.replace(/<[^>]*>/g, '');
-                }
-                let timeRead = Math.round((stripHtml(res.data.desc).split(" ").length / 250) * 60)
-                console.log(timeRead)
+                // function stripHtml(html) {
+                //     return html.replace(/<[^>]*>/g, '');
+                // }
+                // let timeRead = Math.round((stripHtml(res.data.desc).split(" ").length / 250) * 60)
+                // console.log(timeRead)
                 document.title = res.data.title
             } catch (err) {
                 console.log(err)
@@ -68,7 +68,7 @@ const Single = () => {
                     {post.userImg && <img src={post.userImg} alt="" />}
                     {currentUser && currentUser.id === post.uid && (
                         <div className="edit">
-                            <Link to={`/write?edit=2`} state={post}>
+                            <Link to={`/write?edit=${post.id}`} state={post}>
                                 <img src={Edit} alt="" />
                             </Link>
                             <img onClick={handleDelete} src={Delete} alt="" />

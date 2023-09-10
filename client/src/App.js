@@ -7,6 +7,7 @@ import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Write from "./pages/Write"
 import Home from "./pages/Home"
+import MyPost from "./pages/MyPost"
 import Single from "./pages/Single"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: "/write",
                 element: <Write />,
+            },
+            {
+                path: "my-posts",
+                element: <MyPost />
             },
         ],
     },

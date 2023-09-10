@@ -1,7 +1,8 @@
 import express from "express"
+import { myPost } from "../controllers/user.js"
 
 const router = express.Router()
 
-//TODO
+router.get('/my-post', myPost)
 
 export default router

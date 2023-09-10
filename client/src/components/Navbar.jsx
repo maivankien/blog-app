@@ -30,19 +30,23 @@ const Navbar = () => {
                     <Link className="link" to="/?cat=food">
                         <h6>ĐỒ ĂN</h6>
                     </Link>
-                    <span>{currentUser?.username}</span>
                     {currentUser ? (
-                        <span className="logout" onClick={logout}>Đăng xuất</span>
+                        <>
+                            <Link className="link" to="/my-posts" title="Bài viết của tôi">{currentUser?.username}</Link>
+                            <span className="logout" onClick={logout}>
+                                Đăng xuất
+                            </span>
+                            <span className="write">
+                                <Link className="link" to="/write">
+                                    Đăng bài
+                                </Link>
+                            </span>
+                        </>
                     ) : (
                         <Link className="link" to="/login">
-                            Login
+                            Đăng nhập
                         </Link>
                     )}
-                    <span className="write">
-                        <Link className="link" to="/write">
-                            Đăng bài
-                        </Link>
-                    </span>
                 </div>
             </div>
         </div>
