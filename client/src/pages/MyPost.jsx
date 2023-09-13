@@ -51,7 +51,7 @@ const MyPost = () => {
     return (
         <div className="home">
             <div className="posts">
-                {posts.map((post) => (
+                {posts.length ? posts.map((post) => (
                     <div className="post" key={post.id}>
                         <div className="content">
                             <div className="info-user">
@@ -73,7 +73,7 @@ const MyPost = () => {
                             </Link>
                         </div>
                     </div>
-                ))}
+                )) : <div>Bạn chưa có bài viết nào</div>}
             </div>
         </div>
     )

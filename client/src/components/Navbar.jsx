@@ -1,10 +1,12 @@
 import React, { useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 import Logo from "../img/logo.png"
 
 const Navbar = () => {
     const { currentUser, logout } = useContext(AuthContext)
+
+    const cat = new URLSearchParams(useLocation().search).get('cat');
 
     return (
         <div className="navbar">
@@ -15,19 +17,19 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="links">
-                    <Link className="link" to="/?cat=science">
+                    <Link className={`link ${cat === 'science' ? 'active' : ''}`} to="/?cat=science">
                         <h6>KHOA HỌC</h6>
                     </Link>
-                    <Link className="link" to="/?cat=technology">
+                    <Link className={`link ${cat === 'technology' ? 'active' : ''}`} to="/?cat=technology">
                         <h6>CÔNG NGHỆ</h6>
                     </Link>
-                    <Link className="link" to="/?cat=cinema">
+                    <Link className={`link ${cat === 'cinema' ? 'active' : ''}`} to="/?cat=cinema">
                         <h6>PHIM ẢNH</h6>
                     </Link>
-                    <Link className="link" to="/?cat=design">
+                    <Link className={`link ${cat === 'design' ? 'active' : ''}`} to="/?cat=design">
                         <h6>THIẾT KẾ</h6>
                     </Link>
-                    <Link className="link" to="/?cat=food">
+                    <Link className={`link ${cat === 'food' ? 'active' : ''}`} to="/?cat=food">
                         <h6>ĐỒ ĂN</h6>
                     </Link>
                     {currentUser ? (

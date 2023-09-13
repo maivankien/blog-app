@@ -105,6 +105,7 @@
     justify-content: center;
     font-weight: 300;
     border: 1px solid white;
+    cursor: pointer;
 }
 
 .app .container .navbar .container .links .write .link {
@@ -438,4 +439,8 @@
 
 .img-container {
     max-width: 200px;
+}
+
+.active h6 {
+    color: teal;
 }
