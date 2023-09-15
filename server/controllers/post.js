@@ -89,3 +89,16 @@ export const updatePost = (req, res) => {
         })
     })
 }
+
+export const searchPost = (req, res) => {
+    const search = req.query.q
+    if (!search || !search.trim().length) return res.status(400).json("Bad Request")
+
+    const query = 
+        "SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.uid = users.id WHERE MATCH(title, `desc`) AGAINST(?);"
+
+    db.query(query, [search], (err, data) => {
+        if (err) return res.status(500).json(err)
+        return res.status(200).json(data)
+    })
+}

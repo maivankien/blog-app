@@ -5,10 +5,12 @@ import {
     getPost,
     getPosts,
     updatePost,
+    searchPost
 } from "../controllers/post.js"
 
 const router = express.Router()
 
+router.get("/search", searchPost)
 router.get("/", getPosts)
 router.get("/:id", getPost)
 router.post("/", addPost)
