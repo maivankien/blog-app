@@ -65,7 +65,6 @@ const Single = () => {
                         <span style={{ color: '#5488c7' }}>{post.username}</span>
                         <p className="time">Đã đăng vào {moment(post.date).locale('vi').fromNow()}</p>
                     </div>
-                    {post.userImg && <img src={post.userImg} alt="" />}
                     {currentUser && currentUser.id === post.uid && (
                         <div className="edit">
                             <Link to={`/write?edit=${post.id}`} state={post}>

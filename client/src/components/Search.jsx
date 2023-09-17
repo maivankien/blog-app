@@ -66,7 +66,7 @@ function Search() {
                     onFocus={handleFocus}
                     ref={inputRef}
                 />
-                <img src={Close} className="close-input" onClick={CloseInput} />
+                <img src={Close} className="close-input" onClick={CloseInput} alt="close"/>
             </div>
             {focused && showResults && query && query.trim() && (
                 <ul className="search-content">

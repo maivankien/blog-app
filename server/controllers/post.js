@@ -5,11 +5,21 @@ dotenv.config()
 const secret = process.env.SECRET_KEY
 
 export const getPosts = (req, res) => {
-    const q = req.query.cat
-        ? "SELECT posts.id, posts.title, posts.date, users.username FROM posts INNER JOIN users ON posts.uid = users.id WHERE cat = ? order by rand()"
-        : "SELECT posts.id, posts.title, posts.date, users.username FROM posts INNER JOIN users ON posts.uid = users.id order by rand()"
+    const { page = 1, limit = 10, cat } = req.query
+    const offset = (page - 1) * limit
+    const values = [limit, offset]
+    if (cat) values.unshift(cat)
 
-    db.query(q, [req.query.cat], (err, data) => {
+    const q = cat
+        ? 
+        `SELECT posts.id, posts.title, posts.date, users.username FROM posts 
+        JOIN users ON posts.uid = users.id 
+        WHERE cat = ? order by rand() limit ? offset ?`
+        : 
+        `SELECT posts.id, posts.title, posts.date, users.username FROM posts 
+        JOIN users ON posts.uid = users.id order by rand() limit ? offset ?`
+        
+    db.query(q, values, (err, data) => {
         if (err) return res.status(500).send(err)
 
         return res.status(200).json(data)
@@ -18,7 +28,7 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
     const q =
-        "SELECT p.id, p.uid, username, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? "
+        "SELECT p.id, p.uid, username, `title`, `desc`, p.img, `cat`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? "
 
     db.query(q, [req.params.id], (err, data) => {
         if (err) return res.status(500).json(err)
@@ -97,7 +107,7 @@ export const searchPost = (req, res) => {
 
     const query = 
         `SELECT posts.id, posts.title, users.username FROM posts 
-        INNER JOIN users ON posts.uid = users.id 
+        JOIN users ON posts.uid = users.id 
         WHERE MATCH(title) AGAINST(?) limit ?`
 
     db.query(query, [search, parseInt(limit)], (err, data) => {
