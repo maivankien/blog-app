@@ -83,7 +83,7 @@ const Single = () => {
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize((post.desc)),
                     }}
-                ></p>{" "}
+                ></p>
             </div>
             <Menu cat={post.cat} id={post.id} />
         </div>

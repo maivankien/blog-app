@@ -6,8 +6,8 @@ const secret = process.env.SECRET_KEY
 
 export const getPosts = (req, res) => {
     const q = req.query.cat
-        ? "SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.uid = users.id WHERE cat = ? order by rand()"
-        : "SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.uid = users.id order by rand()"
+        ? "SELECT posts.id, posts.title, posts.date, users.username FROM posts INNER JOIN users ON posts.uid = users.id WHERE cat = ? order by rand()"
+        : "SELECT posts.id, posts.title, posts.date, users.username FROM posts INNER JOIN users ON posts.uid = users.id order by rand()"
 
     db.query(q, [req.query.cat], (err, data) => {
         if (err) return res.status(500).send(err)
@@ -92,12 +92,15 @@ export const updatePost = (req, res) => {
 
 export const searchPost = (req, res) => {
     const search = req.query.q
+    const limit = req.query.limit || 10
     if (!search || !search.trim().length) return res.status(400).json("Bad Request")
 
     const query = 
-        "SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.uid = users.id WHERE MATCH(title, `desc`) AGAINST(?);"
+        `SELECT posts.id, posts.title, users.username FROM posts 
+        INNER JOIN users ON posts.uid = users.id 
+        WHERE MATCH(title) AGAINST(?) limit ?`
 
-    db.query(query, [search], (err, data) => {
+    db.query(query, [search, parseInt(limit)], (err, data) => {
         if (err) return res.status(500).json(err)
         return res.status(200).json(data)
     })

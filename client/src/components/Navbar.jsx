@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 import Logo from "../img/logo.png"
+import Search from "./Search"
 
 const Navbar = () => {
     const { currentUser, logout } = useContext(AuthContext)
@@ -16,6 +17,7 @@ const Navbar = () => {
                         <img src={Logo} alt="" />
                     </Link>
                 </div>
+                <Search></Search>
                 <div className="links">
                     <Link className={`link ${cat === 'science' ? 'active' : ''}`} to="/?cat=science">
                         <h6>KHOA HỌC</h6>
