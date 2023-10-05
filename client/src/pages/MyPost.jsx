@@ -8,7 +8,6 @@ import { AuthContext } from "../context/authContext"
 import Edit from "../img/edit.png"
 import Delete from "../img/delete.png"
 import { useContext } from "react"
-// import map from "../context/mapCategory"
 
 const MyPost = () => {
     let [posts, setPosts] = useState([])

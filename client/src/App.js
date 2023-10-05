@@ -11,7 +11,6 @@ import MyPost from "./pages/MyPost"
 import Single from "./pages/Single"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-// import "./style.scss"
 import "./main.css"
 
 const Layout = () => {

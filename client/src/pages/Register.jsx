@@ -11,6 +11,7 @@ const Register = () => {
         username: "",
         email: "",
         password: "",
+        confirm_password: ""
     })
     const [err, setError] = useState(null)
 
@@ -22,12 +23,16 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (inputs.password !== inputs.confirm_password) {
+            return setError("Password incorrect")
+        }
         try {
             await axios.post("/auth/register", inputs)
             navigate("/login")
         } catch (err) {
             setError(err.response.data)
         }
+
     }
 
     return (
@@ -55,8 +60,15 @@ const Register = () => {
                     name="password"
                     onChange={handleChange}
                 />
+                <input
+                    required
+                    type="password"
+                    placeholder="confirm password"
+                    name="confirm_password"
+                    onChange={handleChange}
+                />
                 <button onClick={handleSubmit}>Đăng ký</button>
-                {err && <p>{err}</p>}
+                {err && <p className="show-err">{err}</p>}
                 <span>
                     Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
                 </span>

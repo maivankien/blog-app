@@ -48,16 +48,13 @@ const Write = () => {
         e.preventDefault()
         const imgUrl = await upload()
         if (!title.trim().length) {
-            alert('Tiêu đề không được bỏ trống')
-            return
+            return alert('Tiêu đề không được bỏ trống')
         }
         if (!value.trim().length) {
-            alert('Nội dung không được bỏ trống')
-            return
+            return alert('Nội dung không được bỏ trống')
         }
         if (title.trim().length > 255) {
-            alert('Tiêu đề không được vượt quá 255 ký tự')
-            return
+            return alert('Tiêu đề không được vượt quá 255 ký tự')
         }
         try {
             state

@@ -6,10 +6,15 @@ dotenv.config()
 const secret = process.env.SECRET_KEY
 
 export const register = (req, res) => {
-    //CHECK EXISTING USER
+    const { email, password, username }= req.body
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    
+    if (!username) return res.status(400).json("Username is required")
+    if (!emailRegex.test(email)) return res.status(400).json("Invalid email")
+    if (password.length < 6) return res.status(400).json("Password minimum 6 characters")
+    
     const q = "SELECT * FROM users WHERE email = ?"
-
-    db.query(q, [req.body.email], (err, data) => {
+    db.query(q, [email], (err, data) => {
         if (err) return res.status(500).json(err)
         if (data.length) return res.status(409).json("User already exists!")
 
@@ -28,7 +33,6 @@ export const register = (req, res) => {
 }
 
 export const login = (req, res) => {
-    //CHECK USER
     const q = "SELECT * FROM users WHERE email = ?"
 
     db.query(q, [req.body.email], (err, data) => {
