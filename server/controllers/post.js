@@ -27,11 +27,31 @@ export const getPosts = (req, res) => {
 }
 
 export const getPost = (req, res) => {
-    const q =
-        "SELECT p.id, p.uid, username, `title`, `desc`, p.img, `cat`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? "
+    const postId = req.params.id
+    const token = req.cookies.access_token
+    let user
+    if (token) {
+        try {
+            user = jwt.verify(token, secret)
+        } catch (err) {}
+    }
+    const query = 
+            `SELECT p.id, p.uid, username, title, \`desc\`, p.img, cat, date,
+                SUM(CASE WHEN pl.action = 1 THEN 1 ELSE 0 END) AS likes,
+                SUM(CASE WHEN pl.action = -1 THEN 1 ELSE 0 END) AS dislikes${user ? `,
+                COALESCE((
+                    SELECT action
+                    FROM post_likes
+                    WHERE post_id = ? AND user_id = ${user.id}
+                ), 0) AS user_reaction`: ''}
+            FROM users u
+            JOIN posts p ON u.id = p.uid
+            LEFT JOIN post_likes pl ON p.id = pl.post_id
+            WHERE p.id = ?`
 
-    db.query(q, [req.params.id], (err, data) => {
+    db.query(query, [postId, postId], (err, data) => {
         if (err) return res.status(500).json(err)
+        if (!data[0].hasOwnProperty('user_reaction')) data[0].user_reaction = 0
         return res.status(200).json(data[0])
     })
 }
