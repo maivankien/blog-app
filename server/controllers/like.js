@@ -2,8 +2,8 @@ import { db } from "../db.js"
 
 
 export const likePost = (req, res) => {
-    const { postId } = req.params
-    const { userId } = req.userBeingQuery
+    const { id: postId }  = req.params
+    const { id: userId }  = req.userBeingQuery
 
     const query = 
         `INSERT INTO post_likes (post_id, user_id, action)
@@ -24,8 +24,8 @@ export const likePost = (req, res) => {
 
 
 export const dislikePost = (req, res) => {
-    const { postId } = req.params
-    const { userId } = req.userBeingQuery
+    const { id: postId }  = req.params
+    const { id: userId }  = req.userBeingQuery
 
     const query = 
         `INSERT INTO post_likes (post_id, user_id, action)
