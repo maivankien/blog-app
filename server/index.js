@@ -1,10 +1,10 @@
 import dotenv from 'dotenv'
 import path from 'path'
 import express from "express"
-import authRoutes from "./routes/auth.js"
-import userRoutes from "./routes/users.js"
-import postRoutes from "./routes/posts.js"
-import likeRoutes from "./routes/likes.js"
+import authRoutes from "./src/routes/auth.js"
+import userRoutes from "./src/routes/users.js"
+import postRoutes from "./src/routes/posts.js"
+import likeRoutes from "./src/routes/likes.js"
 import cookieParser from "cookie-parser"
 import multer from "multer"
 dotenv.config()
