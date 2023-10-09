@@ -8,6 +8,7 @@ import moment from "moment"
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import DOMPurify from "dompurify"
+import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import { domain } from "../config.js"
 import 'moment/locale/vi';
 
@@ -73,6 +74,16 @@ const Single = () => {
                             <img onClick={handleDelete} src={Delete} alt="" />
                         </div>
                     )}
+                    <div style={{ "color": "#686565", "margin-top": "5px" }} className="like-dislike">
+                        <span className="like">
+                            <FaThumbsUp className={`icon${post.user_reaction > 0 ? ' active' : ''}`}/>
+                            <span>{post.likes}</span>
+                        </span>
+                        <span className="like">
+                            <FaThumbsDown className={`icon${post.user_reaction < 0 ? ' active' : ''}`}/>
+                            <span>{post.likes}</span>
+                        </span>
+                    </div>
                 </div>
                 <h1>{post.title}</h1>
                 {post.img && (

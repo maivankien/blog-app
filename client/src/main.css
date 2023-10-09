@@ -325,6 +325,25 @@
     font-weight: bold;
 }
 
+.app .container .single .content .user .like {
+    margin: 0 6px;
+    font-size: 18px;
+}
+
+.app .container .single .content .user .like .active {
+    color: rgb(84, 136, 199);
+}
+
+.app .container .single .content .user .like .icon:hover {
+    cursor: pointer;
+    color: rgb(84, 136, 199);
+}
+
+.app .container .single .content .user .like span {
+    margin-left: 4px;
+    color: rgb(84, 136, 199);
+}
+
 .app .container .single .content .edit {
     display: flex;
     gap: 5px;
