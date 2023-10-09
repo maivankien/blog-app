@@ -25,9 +25,9 @@ const Single = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/posts/${postId}`)
-                setPost(res.data)
-                document.title = res.data.title
+                const { data } = await axios.get(`/posts/${postId}`)
+                setPost(data)
+                document.title = data.title
             } catch (err) {
                 console.log(err)
             }

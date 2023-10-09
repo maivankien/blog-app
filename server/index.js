@@ -4,6 +4,7 @@ import express from "express"
 import authRoutes from "./routes/auth.js"
 import userRoutes from "./routes/users.js"
 import postRoutes from "./routes/posts.js"
+import likeRoutes from "./routes/likes.js"
 import cookieParser from "cookie-parser"
 import multer from "multer"
 dotenv.config()
@@ -35,6 +36,7 @@ app.post("/api/upload", upload.single("file"), function (req, res) {
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/posts", postRoutes)
+app.use("/api/likes", likeRoutes)
 
 const port = process.env.PORT
 app.listen(port, () => {
