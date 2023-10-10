@@ -14,13 +14,13 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/posts${cat}`)
+                const { data } = await axios.get(`/posts${cat}`)
                 if (cat.length) {
                     document.title = map[cat.split("=")[1]]
                 } else {
                     document.title = 'Trang chủ'
                 }
-                setPosts(res.data)
+                setPosts(data)
             } catch (err) {
                 console.log(err)
             }

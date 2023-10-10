@@ -50,9 +50,15 @@ export const getPost = (req, res) => {
             WHERE p.id = ?`
 
     db.query(query, [postId, postId], (err, data) => {
-        if (err) return res.status(500).json(err)
-        if (!data[0].hasOwnProperty('user_reaction')) data[0].user_reaction = 0
-        return res.status(200).json(data[0])
+        if (err) return res.status(500).send(err)
+        if (!data[0].id) return res.status(404).json("No data found")
+
+        const resultData = {
+            ...data[0],
+            user_reaction: data[0].hasOwnProperty('user_reaction') ? data[0].user_reaction : 0
+        }
+    
+        return res.status(200).json(resultData)
     })
 }
 

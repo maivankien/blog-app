@@ -1,18 +1,18 @@
 import React from "react"
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import moment from "moment"
 import { AuthContext } from "../context/authContext"
 import Edit from "../img/edit.png"
 import Delete from "../img/delete.png"
 import { useContext } from "react"
+import MESSAGE from "../common/message"
 
 const MyPost = () => {
     let [posts, setPosts] = useState([])
 
-    const cat = useLocation().search
     const navigate = useNavigate()
 
     const { currentUser } = useContext(AuthContext)
@@ -20,14 +20,13 @@ const MyPost = () => {
     if (!currentUser) navigate("/")
 
     const handleDelete = async (postId) => {
-        const shouldDelete = window.confirm("Bạn có chắc chắn muốn xóa bài viết này?")
+        const shouldDelete = window.confirm(MESSAGE.CONFIRM_DELETE)
 
         if (shouldDelete) {
             try {
                 await axios.delete(`/posts/${postId}`)
-                const res = await axios.get('/users/my-post')
-                setPosts(res.data)
-                navigate("/my-posts")
+                const { data } = await axios.get('/users/my-post')
+                setPosts(data)
             } catch (err) {
                 console.log(err)
             }
@@ -37,15 +36,15 @@ const MyPost = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('/users/my-post')
+                const { data } = await axios.get('/users/my-post')
                 document.title = 'Bài viết của tôi'
-                setPosts(res.data)
+                setPosts(data)
             } catch (err) {
                 console.log(err)
             }
         }
         fetchData()
-    }, [cat])
+    }, [])
 
     return (
         <div className="home">

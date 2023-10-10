@@ -11,6 +11,7 @@ import DOMPurify from "dompurify"
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa'
 import { domain } from "../config.js"
 import 'moment/locale/vi'
+import MESSAGE from "../common/message.js"
 
 const Single = () => {
     const [post, setPost] = useState({})
@@ -19,7 +20,6 @@ const Single = () => {
     const navigate = useNavigate()
 
     const postId = location.pathname.split("/")[2]
-
     const { currentUser } = useContext(AuthContext)
 
     useEffect(() => {
@@ -29,33 +29,42 @@ const Single = () => {
                 setPost(data)
                 document.title = data.title
             } catch (err) {
-                console.log(err)
+                navigate(`/post/${postId}/notfound`)
             }
         }
         fetchData()
-    }, [postId])
-
+    }, [postId, navigate])
 
     const handleDelete = async () => {
-        const shouldDelete = window.confirm("Bạn có chắc chắn muốn xóa bài viết này?")
+        const shouldDelete = window.confirm(MESSAGE.CONFIRM_DELETE)
 
         if (shouldDelete) {
             try {
                 await axios.delete(`/posts/${postId}`)
                 navigate("/")
             } catch (err) {
-                console.log(err)
+                alert(MESSAGE.DEFAULT_ERROR)
             }
+        }
+    }
+
+    const callApiLike = async (type, postId) => {
+        try {
+            return await axios.post(`/likes/${type}/${postId}`)
+        } catch (error) {
+            return false
         }
     }
 
     const handleLike = async () => {
         if (!currentUser) {
-            const check = window.confirm("Bạn cần đăng nhập để sử dụng tính năng này. \nBấm OK để  đăng nhập")
+            const check = window.confirm(MESSAGE.CONFIRM_LOGIN)
 
             if (check) return navigate("/login")
         } else {
             const reaction = post.user_reaction
+            const like = await callApiLike('like', post.id)
+            if (!like) return alert("Có lỗi xảy ra")
             switch (reaction) {
                 case 0:
                     setPost({
@@ -87,11 +96,14 @@ const Single = () => {
 
     const handleDisLike = async () => {
         if (!currentUser) {
-            const check = window.confirm("Bạn cần đăng nhập để sử dụng tính năng này. \nBấm OK để  đăng nhập")
+            const check = window.confirm(MESSAGE.CONFIRM_LOGIN)
 
             if (check) return navigate("/login")
         } else {
             const reaction = post.user_reaction
+            const like = await callApiLike('dislike', post.id)
+            if (!like) return alert(MESSAGE.DEFAULT_ERROR)
+
             switch (reaction) {
                 case 0:
                     setPost({

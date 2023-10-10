@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css"
 import axios from "axios"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import moment from "moment"
+import MESSAGE from "../common/message"
 
 const Write = () => {
     let state = useLocation().state
@@ -48,13 +49,13 @@ const Write = () => {
         e.preventDefault()
         const imgUrl = await upload()
         if (!title.trim().length) {
-            return alert('Tiêu đề không được bỏ trống')
+            return alert(MESSAGE.REQUIRED_TITLE)
         }
         if (!value.trim().length) {
-            return alert('Nội dung không được bỏ trống')
+            return alert(MESSAGE.REQUIRED_CONTENT)
         }
         if (title.trim().length > 255) {
-            return alert('Tiêu đề không được vượt quá 255 ký tự')
+            return alert(MESSAGE.MAX_LENGTH_TITLE)
         }
         try {
             state
@@ -73,8 +74,7 @@ const Write = () => {
                 })
             navigate("/")
         } catch (err) {
-            alert('Có lỗi xảy ra. Vui lòng thử lại.')
-            console.log(err)
+            alert(MESSAGE.DEFAULT_ERROR)
         }
     }
 

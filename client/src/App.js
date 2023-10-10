@@ -1,9 +1,9 @@
 import {
-    createBrowserRouter,
-    RouterProvider,
     Outlet,
+    RouterProvider,
+    createBrowserRouter,
 } from "react-router-dom"
-import Register from "./pages/Register"
+import "./main.css"
 import Login from "./pages/Login"
 import Write from "./pages/Write"
 import Home from "./pages/Home"
@@ -11,7 +11,8 @@ import MyPost from "./pages/MyPost"
 import Single from "./pages/Single"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import "./main.css"
+import Register from "./pages/Register"
+import NotFound from "./pages/NotFound"
 
 const Layout = () => {
     return (
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
     },
+    {
+        path: "/post/:id/notfound",
+        element: <NotFound />
+    },
+    {
+        path: '*',
+        element: <NotFound />,
+    }
 ])
 
 function App() {
