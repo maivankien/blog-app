@@ -37,8 +37,8 @@ const Write = () => {
 
             const formData = new FormData()
             formData.append("file", file)
-            const res = await axios.post("/upload", formData)
-            return res.data
+            const { data } = await axios.post("/upload", formData)
+            return data
         } catch (err) {
             console.error(err)
         }

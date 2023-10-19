@@ -64,7 +64,7 @@ const Single = () => {
         } else {
             const reaction = post.user_reaction
             const like = await callApiLike('like', post.id)
-            if (!like) return alert("Có lỗi xảy ra")
+            if (!like) return alert(MESSAGE.DEFAULT_ERROR)
             switch (reaction) {
                 case 0:
                     setPost({
