@@ -31,6 +31,7 @@ const Write = () => {
         setCat(state?.cat || '')
     }, [state])
 
+    
     const upload = async () => {
         try {
             if (!file) return
@@ -72,8 +73,10 @@ const Write = () => {
                     img: file ? imgUrl : image,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
                 })
+            
             navigate("/")
         } catch (err) {
+            console.error(err)
             alert(MESSAGE.DEFAULT_ERROR)
         }
     }
@@ -93,6 +96,23 @@ const Write = () => {
                         theme="snow"
                         value={value}
                         onChange={setValue}
+                        modules={{
+                            toolbar: [
+                                [{ header: [1, 2, false] }],
+                                ["bold", "italic", "underline", "strike", "blockquote"],
+                                [
+                                    { list: "ordered" },
+                                    { list: "bullet" },
+                                    { indent: "-1" },
+                                    { indent: "+1" },
+                                ],
+                                ["link", "image"],
+                                ["clean"],
+                            ],
+                            clipboard: {
+                                matchVisual: false,
+                            },
+                        }}
                     />
                 </div>
             </div>
