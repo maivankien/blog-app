@@ -6,6 +6,7 @@ import userRoutes from "./src/routes/users.js"
 import postRoutes from "./src/routes/posts.js"
 import likeRoutes from "./src/routes/likes.js"
 import cookieParser from "cookie-parser"
+import bodyParser from 'body-parser'
 import multer from "multer"
 dotenv.config()
 
@@ -13,6 +14,8 @@ const app = express()
 
 const __dirname = new URL('.', import.meta.url).pathname
 
+app.use(bodyParser.json({ limit: '10mb' }))
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
 app.use(express.json())
