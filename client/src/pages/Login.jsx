@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useContext } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 
 const Login = () => {
@@ -14,9 +14,9 @@ const Login = () => {
     const [err, setError] = useState(null)
 
     const navigate = useNavigate()
-
     const { login } = useContext(AuthContext)
 
+    const [searchParams] = useSearchParams()
 
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -26,7 +26,12 @@ const Login = () => {
         e.preventDefault()
         try {
             await login(inputs)
-            navigate("/")
+            const continute = searchParams.get("continue")
+            if (continute) {
+                navigate(continute)
+            } else {
+                navigate("/")
+            }
         } catch (err) {
             setError(err.response.data)
         }

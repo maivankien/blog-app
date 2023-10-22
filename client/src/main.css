@@ -314,6 +314,10 @@
     font-size: 14px;
 }
 
+.app .container .single .content .user .username {
+    color: #5488c7
+}
+
 .app .container .single .content .user img {
     width: 50px;
     height: 50px;
@@ -323,6 +327,11 @@
 
 .app .container .single .content .user span {
     font-weight: bold;
+}
+
+.app .container .single .content .user .like-dislike {
+    color: #686565;
+    margin-top: 5px
 }
 
 .app .container .single .content .user .like {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useSearchParams, useLocation } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 import Logo from "../img/logo.png"
 import Search from "./Search"
@@ -7,14 +7,20 @@ import Search from "./Search"
 const Navbar = () => {
     const { currentUser, logout } = useContext(AuthContext)
 
-    const cat = new URLSearchParams(useLocation().search).get('cat');
+    const [searchParams] = useSearchParams()
+    const cat = searchParams.get('cat')
+    const url = useLocation().pathname
+
+    const pathLogin = 
+        url !== '/' ? `/login?continue=${url}` : 
+        (cat ? `/login?continue=/?cat=${cat}` : '/login')
 
     return (
         <div className="navbar">
             <div className="container">
                 <div className="logo" title="Trang chủ">
                     <Link to="/" a>
-                        <img src={Logo} alt="" />
+                        <img src={Logo} alt="Logo" />
                     </Link>
                 </div>
                 <Search></Search>
@@ -47,7 +53,7 @@ const Navbar = () => {
                             </span>
                         </>
                     ) : (
-                        <Link className="link" to="/login">
+                        <Link className="link" to={pathLogin}>
                             Đăng nhập
                         </Link>
                     )}

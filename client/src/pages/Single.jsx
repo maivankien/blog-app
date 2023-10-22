@@ -60,7 +60,8 @@ const Single = () => {
         if (!currentUser) {
             const check = window.confirm(MESSAGE.CONFIRM_LOGIN)
 
-            if (check) return navigate("/login")
+            const currentURL = location.pathname
+            if (check) return navigate(`/login?continue=${currentURL}`)
         } else {
             const reaction = post.user_reaction
             const like = await callApiLike('like', post.id)
@@ -98,7 +99,8 @@ const Single = () => {
         if (!currentUser) {
             const check = window.confirm(MESSAGE.CONFIRM_LOGIN)
 
-            if (check) return navigate("/login")
+            const currentURL = location.pathname
+            if (check) return navigate(`/login?continue=${currentURL}`)
         } else {
             const reaction = post.user_reaction
             const like = await callApiLike('dislike', post.id)
@@ -138,7 +140,7 @@ const Single = () => {
             <div className="content">
                 <div className="user">
                     <div className="info">
-                        <span style={{ color: '#5488c7' }}>{post.username}</span>
+                        <span className="username">{post.username}</span>
                         <p className="time">Đã đăng vào {moment(post.date).locale('vi').fromNow()}</p>
                     </div>
                     {currentUser && currentUser.id === post.uid && (
@@ -149,7 +151,7 @@ const Single = () => {
                             <img onClick={handleDelete} src={Delete} alt="" />
                         </div>
                     )}
-                    <div style={{ "color": "#686565", "margin-top": "5px" }} className="like-dislike">
+                    <div className="like-dislike">
                         <span className="like">
                             <FaThumbsUp className={`icon${post.user_reaction > 0 ? ' active' : ''}`} onClick={handleLike} />
                             <span>{post.likes}</span>

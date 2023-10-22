@@ -1,4 +1,4 @@
-const map = {
+const CATEGORY = {
     science: "Khoa học",
     technology: "Công nghệ",
     cinema: "Phim ảnh",
@@ -6,4 +6,4 @@ const map = {
     food: "Đồ ăn"
 }
 
-export default map
+export default CATEGORY

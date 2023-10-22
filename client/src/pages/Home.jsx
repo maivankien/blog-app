@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import axios from "axios"
 import moment from "moment"
-import map from "../context/mapCategory"
+import CATEGORY from "../common/category"
 
 const Home = () => {
     let [posts, setPosts] = useState([])
@@ -16,7 +16,7 @@ const Home = () => {
             try {
                 const { data } = await axios.get(`/posts${cat}`)
                 if (cat.length) {
-                    document.title = map[cat.split("=")[1]]
+                    document.title = CATEGORY[cat.split("=")[1]]
                 } else {
                     document.title = 'Trang chủ'
                 }
