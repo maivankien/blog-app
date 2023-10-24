@@ -108,10 +108,7 @@ const Write = () => {
                                 ],
                                 ["link", "image"],
                                 ["clean"],
-                            ],
-                            clipboard: {
-                                matchVisual: false,
-                            },
+                            ]
                         }}
                     />
                 </div>

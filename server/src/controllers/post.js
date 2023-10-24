@@ -5,7 +5,7 @@ dotenv.config()
 const secret = process.env.SECRET_KEY
 
 export const getPosts = (req, res) => {
-    const { page = 1, limit = 10, cat } = req.query
+    const { page = 1, limit = 30, cat } = req.query
     const offset = (page - 1) * limit
     const values = [limit, offset]
     if (cat) values.unshift(cat)
@@ -70,7 +70,7 @@ export const addPost = (req, res) => {
         if (err) return res.status(403).json("Token is not valid!")
 
         const q =
-            "INSERT INTO posts(`title`, `desc`, `img`, `cat`, `date`,`uid`) VALUES (?)"
+            "INSERT INTO posts(`title`, `desc`, `img`, `cat`, `date`, `uid`) VALUES (?)"
 
         const values = [
             req.body.title,
